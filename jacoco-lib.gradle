@@ -6,7 +6,7 @@
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion = "0.8.3"
+//    toolVersion = "0.8.3"
 }
 
 // Enable test result in terminal

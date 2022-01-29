@@ -16,3 +16,44 @@ buildscript {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+// https://vividcode.hatenablog.com/entry/software-test/jacoco-gradle-multi-module
+// https://qiita.com/ryo_mm2d/items/e431326f701e74ec49fa
+
+apply plugin: 'jacoco'
+
+jacoco {
+}
+
+task jacocoMerge(type: JacocoMerge) {
+    group = 'reporting'
+    description = "Merge all JaCoCo reports from projects into one."
+
+    gradle.afterProject { prj, state ->
+        if (prj.rootProject != prj && prj.plugins.hasPlugin('jacoco')) {
+            executionData "${prj.buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+            //                ./LibY/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec
+
+            dependsOn "${prj.path}:testSuiteDebugJacocoReport"
+        }
+    }
+}
+
+task jacocoMergedReport(
+        type: JacocoReport,
+        dependsOn: [tasks.jacocoMerge],
+        group: "reporting"
+) {
+    getExecutionData().from = jacocoMerge.destinationFile
+
+    gradle.afterProject { project, _ ->
+        if (project.rootProject != project && project.plugins.hasPlugin('jacoco')) {
+            getSourceDirectories().from += "${project.projectDir}/src/main/java"
+            getClassDirectories().from += project.fileTree(dir: "${project.buildDir}/tmp/kotlin-classes/debug")
+        }
+    }
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
