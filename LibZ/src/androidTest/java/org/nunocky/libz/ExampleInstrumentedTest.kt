@@ -19,9 +19,4 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("org.nunocky.libz.test", appContext.packageName)
     }
-
-    @Test
-    fun callHello() {
-        LibZ.hello()
-    }
 }
