@@ -16,7 +16,7 @@ class RobolectricTest {
     }
 
     @Test
-    fun callHello() {
-        LibZ.hello()
+    fun callFoobar() {
+        LibZ.foobar()
     }
 }

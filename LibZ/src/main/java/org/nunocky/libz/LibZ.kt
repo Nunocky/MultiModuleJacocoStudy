@@ -5,6 +5,10 @@ class LibZ {
         fun hello() {
             println("Hello from LibZ")
         }
+
+        fun foobar() {
+            println("foobar")
+        }
     }
 
     fun hello() {

@@ -37,6 +37,12 @@ android {
         unitTests {
             includeAndroidResources = true
         }
+
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
     }
 }
 
