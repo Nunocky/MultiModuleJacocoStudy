@@ -32,8 +32,13 @@ task jacocoMerge(type: JacocoMerge) {
 
     gradle.afterProject { prj, state ->
         if (prj.rootProject != prj && prj.plugins.hasPlugin('jacoco')) {
-            executionData "${prj.buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
+            //executionData "${prj.buildDir}/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec"
             //                ./LibY/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec
+
+            executionData project.fileTree(dir: "${prj.buildDir}", includes: [
+                    '**/*.exec',  // JUnit Test Result
+                    '**/*.ec'])   // Espresso Test Result
+
 
             dependsOn "${prj.path}:testSuiteDebugJacocoReport"
         }
@@ -49,8 +54,27 @@ task jacocoMergedReport(
 
     gradle.afterProject { project, _ ->
         if (project.rootProject != project && project.plugins.hasPlugin('jacoco')) {
+// 最初の
             getSourceDirectories().from += "${project.projectDir}/src/main/java"
             getClassDirectories().from += project.fileTree(dir: "${project.buildDir}/tmp/kotlin-classes/debug")
+
+// だめ
+//            def mainSrc = "${project.projectDir}/src/main/java"
+//            getSourceDirectories().from += files([mainSrc])
+
+// だめ
+//            def mainSrc = "${project.projectDir}/src/main/java"
+//            getSourceDirectories().from.addAll(files([mainSrc]))
+
+
+//            getClassDirectories().from +=
+////            getClassDirectories().from.addAll(
+//                    project.fileTree(dir: "${project.buildDir}", includes: [
+//                            '**/*.exec',  // JUnit Test Result
+//                            '**/*.ec'])   // Espresso Test Result
+////            )
+//            print("\n-----------------------------\n")
+//            print("${getClassDirectories().from}\n")
         }
     }
     reports {
