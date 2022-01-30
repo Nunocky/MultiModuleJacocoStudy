@@ -54,7 +54,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
 
-apply from: '../jacoco.gradle'
+apply from: '../jacoco-module.gradle'
 
 // [Cannot run gradle test tasks because of java.lang.NoClassDefFoundError: jdk/internal/reflect/GeneratedSerializationConstructorAccessor1](https://stackoverflow.com/questions/68065743/cannot-run-gradle-test-tasks-because-of-java-lang-noclassdeffounderror-jdk-inte)
 tasks.withType(Test) {

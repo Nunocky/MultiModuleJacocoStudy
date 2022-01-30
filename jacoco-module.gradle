@@ -21,7 +21,7 @@ tasks.withType(Test) {
 }
 
 variants().all { variant ->
-    def tag = "[jacoco.gradle]"
+    def tag = "[jacoco-module.gradle]"
     def variantName = variant.name
     def variantCapName = variant.name.capitalize()
     def fullTestTask = "testSuite${variantCapName}JacocoReport"
