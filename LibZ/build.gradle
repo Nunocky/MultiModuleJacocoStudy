@@ -33,13 +33,17 @@ android {
         jvmTarget = '1.8'
     }
 
+    jacoco {
+        version = rootProject.ext.jacoco_version
+    }
+
     testOptions {
         unitTests {
             includeAndroidResources = true
         }
 
         unitTests.all {
-            jvmArgs '-noverify' // ここを追加 (Robolectric対策)
+            jvmArgs '-noverify'
             jacoco {
                 includeNoLocationClasses = true
             }
