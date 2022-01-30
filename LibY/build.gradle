@@ -46,6 +46,21 @@ android {
     jacoco {
         version = rootProject.ext.jacoco_version
     }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+
+        unitTests.all {
+            // IntelliJ Code Coverage + Robolectricの注意点
+            // https://qiita.com/keidroid/items/adc4f065b84d8a2cd17a#intellij-code-coverage--robolectric%E3%81%AE%E6%B3%A8%E6%84%8F%E7%82%B9
+            jvmArgs '-noverify'
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
 }
 
 dependencies {
