@@ -2,6 +2,9 @@
 
 マルチモジュール構成の Android Studioプロジェクトで jacocoを使用するサンプル。ユニットテストと androidTestのレポートをマージする。
 
+* gradle: 7.0.4
+* jacoco 0.8.7
+
 ## Module Dependency
 
 * app
