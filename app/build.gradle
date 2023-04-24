@@ -43,9 +43,6 @@ android {
         }
     }
 
-    jacoco {
-        version = rootProject.ext.jacoco_version
-    }
 
     testOptions {
         unitTests {
@@ -60,6 +57,10 @@ android {
                 includeNoLocationClasses = true
             }
         }
+    }
+    namespace 'org.nunocky.multimodulejacocostudy'
+    testCoverage {
+        jacocoVersion jacoco_version
     }
 }
 

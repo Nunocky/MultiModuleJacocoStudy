@@ -9,8 +9,6 @@ android {
     defaultConfig {
         minSdk 27
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -43,10 +41,7 @@ android {
         }
     }
 
-    jacoco {
-        version = rootProject.ext.jacoco_version
-    }
-    
+
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -60,6 +55,10 @@ android {
                 includeNoLocationClasses = true
             }
         }
+    }
+    namespace 'org.nunocky.libx'
+    testCoverage {
+        jacocoVersion jacoco_version
     }
 
 }
