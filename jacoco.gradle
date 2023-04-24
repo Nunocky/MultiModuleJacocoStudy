@@ -7,32 +7,15 @@ jacoco {
     toolVersion = "${rootProject.ext.jacoco_version}"
 }
 
-task jacocoMerge(type: JacocoMerge) {
-    group = 'reporting'
-    description = "Merge all JaCoCo reports from projects into one."
-
-    gradle.afterProject { prj, state ->
-        if (prj.rootProject != prj && prj.plugins.hasPlugin('jacoco')) {
-            executionData project.fileTree(dir: "${prj.buildDir}", includes: [
-                    '**/*.exec',  // JUnit Test Result
-                    '**/*.ec'])   // Espresso Test Result
-
-            dependsOn "${prj.path}:testSuiteDebugJacocoReport"
-        }
-    }
-}
-
 task jacocoMergedReport(
         type: JacocoReport,
-        dependsOn: [tasks.jacocoMerge],
         group: "reporting"
 ) {
     delete "${rootProject.buildDir}/reports/jacoco"
 
-    getExecutionData().from = jacocoMerge.destinationFile
-
     gradle.afterProject { project, _ ->
         if (project.rootProject != project && project.plugins.hasPlugin('jacoco')) {
+            getExecutionData().from += "${project.buildDir}/jacoco/testDebugUnitTest.exec" // 4
             getSourceDirectories().from += "${project.projectDir}/src/main/java"
             getClassDirectories().from += project.fileTree(dir: "${project.buildDir}/tmp/kotlin-classes/debug")
         }
